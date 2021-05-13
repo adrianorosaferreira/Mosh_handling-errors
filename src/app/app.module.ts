@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'; 
 import { HttpModule } from "@angular/http";
 
@@ -10,12 +10,16 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { GithubFollowersComponent } from './github-followers/github-followers.component';
 
 import { GithubFollowersService } from './github-followers/github-followers.service';
+import { PostService } from './posts/services/post.service';
+import { AppErrorHandler } from './common/app-error-handler';
+import { PostsComponent } from './posts/posts/posts.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     GithubFollowersComponent,
+    PostsComponent,
     AboutComponent,
     NavbarComponent
   ],
@@ -24,11 +28,14 @@ import { GithubFollowersService } from './github-followers/github-followers.serv
     HttpModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
-      { path: 'followers', component: GithubFollowersComponent }
+      { path: 'followers', component: GithubFollowersComponent },
+      { path: 'post', component: PostsComponent },
     ])
   ],
   providers: [
-    GithubFollowersService
+    PostService,
+    GithubFollowersService,
+    { provide: ErrorHandler, useClass: AppErrorHandler }
   ],
   bootstrap: [AppComponent]
 })
